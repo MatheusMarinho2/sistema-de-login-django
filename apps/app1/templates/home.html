@@ -1,13 +1,10 @@
-{% extends "base.html" %}
-
-{% block title %}
-    Página Inicial
-{% endblock %}
-
+{% extends 'base.html' %}
+{% block title %}Página Inicial{% endblock %}
 {% block content %}
-
-total de usuarios :{{count}}
-
-    <h1>Home</h1>
-    <p>Bem-vindo{% if user.is_authenticated %} {{user.username}}{% else %} visitante {% endif %}</p>
+  <h1>Página Inicial</h1>
+  {% if user.is_authenticated %}
+    <p>Bem-vindo, {{ user.username }}!</p>
+  {% else %}
+    <p>Olá, visitante! Faça login ou cadastre-se.</p>
+  {% endif %}
 {% endblock %}

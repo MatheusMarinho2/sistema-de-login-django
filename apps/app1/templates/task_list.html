@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Minhas Tarefas{% endblock %}
+{% block content %}
+  <h1>Minhas Tarefas</h1>
+  {% if perms.app1.can_manage_tasks %}
+    <a href="{% url 'task_create' %}" class="button">+ Nova Tarefa</a>
+  {% endif %}
+  <ul>
+    {% for task in object_list %}
+      <li>
+        <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
+        &ndash; {{ task.get_status_display }}
+      </li>
+    {% empty %}
+      <li>Nenhuma tarefa encontrada.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

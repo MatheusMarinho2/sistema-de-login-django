@@ -1,0 +1,63 @@
+# Ambiente virtual
+.venv/
+venv/
+ENV/
+env/
+build/
+dist/
+
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.swp
+
+# Django
+*.log
+*.pot
+*.py[cod]
+*/migrations/
+!*/migrations/__init__.py
+
+# Configurações locais / variáveis de ambiente
+.env
+*.env
+secret_key.txt
+local_settings.py
+
+# SQLite (se ainda estiver usando)
+db.sqlite3
+
+# IDEs / editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Test / coverage
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+pytest_cache/
+.pytest_cache/
+
+# Distribuição
+*.egg-info/
+.eggs/
+*.egg
+
+# Logs e relatórios
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

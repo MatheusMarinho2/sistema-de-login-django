@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Detalhes da Tarefa{% endblock %}
+{% block content %}
+  <h1>{{ object.title }}</h1>
+  <p><strong>Status:</strong> {{ object.get_status_display }}</p>
+  <p><strong>Criador:</strong> {{ object.created_by.username }}</p>
+  <p><strong>Atribuído a:</strong> {{ object.assigned_to.username }}</p>
+  <p><strong>Descrição:</strong></p>
+  <p>{{ object.description|linebreaks }}</p>
+  <p><strong>Data de criação:</strong> {{ object.created_at|date:"d/m/Y H:i" }}</p>
+  <p><strong>Data de vencimento:</strong> {{ object.due_date|date:"d/m/Y" }}</p>
+
+  {% if perms.app1.can_manage_tasks %}
+    <a href="{% url 'task_update' object.pk %}" class="button">Editar</a>
+    <a href="{% url 'task_delete' object.pk %}" class="button">Excluir</a>
+  {% endif %}
+  <a href="{% url 'task_list' %}" class="button">Voltar</a>
+{% endblock %}
