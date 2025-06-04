@@ -1,18 +1,44 @@
 {% extends 'base.html' %}
 {% block title %}Detalhes da Tarefa{% endblock %}
 {% block content %}
-  <h1>{{ object.title }}</h1>
-  <p><strong>Status:</strong> {{ object.get_status_display }}</p>
-  <p><strong>Criador:</strong> {{ object.created_by.username }}</p>
-  <p><strong>Atribuído a:</strong> {{ object.assigned_to.username }}</p>
-  <p><strong>Descrição:</strong></p>
-  <p>{{ object.description|linebreaks }}</p>
-  <p><strong>Data de criação:</strong> {{ object.created_at|date:"d/m/Y H:i" }}</p>
-  <p><strong>Data de vencimento:</strong> {{ object.due_date|date:"d/m/Y" }}</p>
+  <h1><i class="fas fa-wrench"></i> {{ object.title }}</h1>
 
-  {% if perms.app1.can_manage_tasks %}
-    <a href="{% url 'task_update' object.pk %}" class="button">Editar</a>
-    <a href="{% url 'task_delete' object.pk %}" class="button">Excluir</a>
-  {% endif %}
-  <a href="{% url 'task_list' %}" class="button">Voltar</a>
+  <div class="task-detail">
+    <div class="detail-item">
+      <h4><i class="fas fa-info-circle"></i> Informações da Tarefa</h4>
+      <div class="task-meta">
+        <span><i class="fas fa-flag"></i> Status: <strong>{{ object.get_status_display }}</strong></span>
+        <span><i class="fas fa-calendar"></i> Data de vencimento: <strong>{{ object.due_date|date:"d/m/Y" }}</strong></span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <h4><i class="fas fa-users"></i> Responsáveis</h4>
+      <div class="task-meta">
+        <span><i class="fas fa-user"></i> Criador: <strong>{{ object.created_by.username }}</strong></span>
+        <span><i class="fas fa-user-cog"></i> Atribuído a: <strong>{{ object.assigned_to.username }}</strong></span>
+      </div>
+    </div>
+
+    <div class="detail-item">
+      <h4><i class="fas fa-file-alt"></i> Descrição</h4>
+      <p>{{ object.description|linebreaks }}</p>
+    </div>
+
+    <div class="detail-item">
+      <h4><i class="fas fa-history"></i> Histórico</h4>
+      <div class="task-meta">
+        <span><i class="fas fa-calendar-plus"></i> Criada em: <strong>{{ object.created_at|date:"d/m/Y H:i" }}</strong></span>
+        <span><i class="fas fa-calendar-check"></i> Atualizada em: <strong>{{ object.updated_at|date:"d/m/Y H:i" }}</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="task-actions">
+    <a href="{% url 'task_list' %}" class="button"><i class="fas fa-arrow-left"></i> Voltar</a>
+    {% if perms.app1.can_manage_tasks %}
+      <a href="{% url 'task_update' object.pk %}" class="button"><i class="fas fa-edit"></i> Editar</a>
+      <a href="{% url 'task_delete' object.pk %}" class="button secondary"><i class="fas fa-trash"></i> Excluir</a>
+    {% endif %}
+  </div>
 {% endblock %}

@@ -6,10 +6,20 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import Task
+from django.contrib.auth.views import PasswordChangeView
+from .forms import CustomPasswordChangeForm
+
+
+class CustomPasswordChangeView(PasswordChangeView):
+    form_class = CustomPasswordChangeForm
+    template_name = 'registration/password_change_form.html'
+    success_url = '/accounts/password_change/done/'
 
 
 class home(TemplateView):
     template_name = 'home.html'
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
 
 
 def signup(request):
@@ -44,8 +54,9 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 class TaskCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Task
     template_name = 'task_form.html'
-    fields = ['title','description','assigned_to','status','due_date']
+    fields = ['title', 'description', 'status', 'assigned_to', 'due_date']
     permission_required = 'app1.can_manage_tasks'
+    success_url = reverse_lazy('task_list')
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user

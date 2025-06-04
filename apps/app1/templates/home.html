@@ -1,10 +1,48 @@
 {% extends 'base.html' %}
 {% block title %}Página Inicial{% endblock %}
 {% block content %}
-  <h1>Página Inicial</h1>
+  <h1><i class="fas fa-home"></i> Página Inicial</h1>
+
   {% if user.is_authenticated %}
-    <p>Bem-vindo, {{ user.username }}!</p>
+    <div class="welcome-section">
+      <h2><i class="fas fa-car"></i> Bem-vindo, {{ user.username }}!</h2>
+      <p>Gerencie as tarefas de manutenção e reparos da oficina com eficiência.</p>
+      <a href="{% url 'task_list' %}" class="button"><i class="fas fa-tools"></i> Ver Minhas Tarefas</a>
+    </div>
   {% else %}
-    <p>Olá, visitante! Faça login ou cadastre-se.</p>
+    <div class="welcome-section">
+      <h2><i class="fas fa-car"></i> Bem-vindo à HI SERVICE</h2>
+      <p>Sistema de gerenciamento de tarefas para oficina mecânica. Faça login para acessar suas tarefas.</p>
+      <div class="nav-buttons" style="justify-content: center; margin-top: 1rem;">
+        <a href="{% url 'login' %}" class="button"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a href="{% url 'signup' %}" class="button"><i class="fas fa-user-plus"></i> Cadastre-se</a>
+      </div>
+    </div>
   {% endif %}
+
+  <div class="dashboard-stats">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-car-battery"></i>
+      </div>
+      <div class="stat-value">24</div>
+      <div class="stat-label">Veículos em Manutenção</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-tools"></i>
+      </div>
+      <div class="stat-value">18</div>
+      <div class="stat-label">Tarefas Pendentes</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <div class="stat-value">42</div>
+      <div class="stat-label">Serviços Concluídos</div>
+    </div>
+  </div>
 {% endblock %}

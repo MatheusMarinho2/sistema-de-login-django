@@ -1,13 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}{{ view.action_title|default:"Formulário de Tarefa" }}{% endblock %}
 {% block content %}
-  <h1>{{ view.action_title|default:"Formulário de Tarefa" }}</h1>
+  <h1><i class="fas fa-edit"></i> {{ view.action_title|default:"Formulário de Tarefa" }}</h1>
+
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <div>
-      <button type="submit">Salvar</button>
-      <a href="{% url 'task_list' %}" class="button">Cancelar</a>
+
+    <div class="form-group">
+      <label for="id_title"><i class="fas fa-heading"></i> Título</label>
+      {{ form.title }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_description"><i class="fas fa-file-alt"></i> Descrição</label>
+      {{ form.description }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_status"><i class="fas fa-flag"></i> Status</label>
+      {{ form.status }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_assigned_to"><i class="fas fa-user"></i> Atribuído a</label>
+      {{ form.assigned_to }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_due_date"><i class="fas fa-calendar"></i> Data de Vencimento</label>
+      {{ form.due_date }}
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+      <button type="submit"><i class="fas fa-save"></i> Salvar</button>
+      <a href="{% url 'task_list' %}" class="button outline"><i class="fas fa-times"></i> Cancelar</a>
     </div>
   </form>
 {% endblock %}

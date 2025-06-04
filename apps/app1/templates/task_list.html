@@ -1,18 +1,43 @@
 {% extends 'base.html' %}
 {% block title %}Minhas Tarefas{% endblock %}
 {% block content %}
-  <h1>Minhas Tarefas</h1>
-  {% if perms.app1.can_manage_tasks %}
-    <a href="{% url 'task_create' %}" class="button">+ Nova Tarefa</a>
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1><i class="fas fa-tools"></i> Minhas Tarefas</h1>
+    {% if perms.app1.can_manage_tasks %}
+      <a href="{% url 'task_create' %}" class="button"><i class="fas fa-plus"></i> Nova Tarefa</a>
+    {% endif %}
+  </div>
+
+  {% if object_list %}
+    <div class="task-grid">
+      {% for task in object_list %}
+        <div class="task-card">
+          <h3><i class="fas fa-wrench"></i> {{ task.title }}</h3>
+          <div>
+            <span class="status status-{{ task.status|lower }}">{{ task.get_status_display }}</span>
+          </div>
+          <div class="task-meta">
+            <span><i class="fas fa-user"></i> {{ task.created_by.username }}</span>
+            <span><i class="fas fa-calendar"></i> {{ task.due_date|date:"d/m/Y" }}</span>
+          </div>
+          <p>{{ task.description|truncatechars:100 }}</p>
+          <div class="task-actions">
+            <a href="{% url 'task_detail' task.pk %}" class="action-btn"><i class="fas fa-eye"></i> Detalhes</a>
+            {% if perms.app1.can_manage_tasks %}
+              <a href="{% url 'task_update' task.pk %}" class="action-btn"><i class="fas fa-edit"></i> Editar</a>
+              <a href="{% url 'task_delete' task.pk %}" class="action-btn"><i class="fas fa-trash"></i> Deletar</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="welcome-section" style="margin: 2rem 0; text-align: center;">
+      <h3 style="margin-left:38%;"><i class="fas fa-clipboard-list"></i> Nenhuma tarefa encontrada</h3>
+      <p>Você não tem tarefas atribuídas no momento.</p>
+      {% if perms.app1.can_manage_tasks %}
+        <a href="{% url 'task_create' %}" class="button"><i class="fas fa-plus"></i> Criar Primeira Tarefa</a>
+      {% endif %}
+    </div>
   {% endif %}
-  <ul>
-    {% for task in object_list %}
-      <li>
-        <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
-        &ndash; {{ task.get_status_display }}
-      </li>
-    {% empty %}
-      <li>Nenhuma tarefa encontrada.</li>
-    {% endfor %}
-  </ul>
 {% endblock %}

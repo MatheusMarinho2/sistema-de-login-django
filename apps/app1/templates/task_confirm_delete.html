@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}Confirmar Exclusão{% endblock %}
 {% block content %}
-  <h1>Confirmar Exclusão</h1>
-  <p>Deseja realmente excluir a tarefa "{{ object.title }}"?</p>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit">Sim, excluir</button>
-    <a href="{% url 'task_detail' object.pk %}" class="button">Cancelar</a>
-  </form>
+  <div class="confirmation-box">
+    <h2><i class="fas fa-exclamation-triangle"></i> Confirmar Exclusão</h2>
+    <p>Deseja realmente excluir a tarefa "{{ object.title }}"?</p>
+    <p>Esta ação não pode ser desfeita.</p>
+
+    <form method="post" style="margin-top: 2rem;">
+      {% csrf_token %}
+      <button type="submit" class="button secondary"><i class="fas fa-trash"></i> Sim, excluir</button>
+      <a href="{% url 'task_detail' object.pk %}" class="button outline"><i class="fas fa-times"></i> Cancelar</a>
+    </form>
+  </div>
 {% endblock %}
